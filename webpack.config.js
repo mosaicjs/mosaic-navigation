@@ -11,5 +11,5 @@ module.exports = {
             loader : 'babel'
         } ]
     },
-    externals : [ 'promise' ]
+    externals : [ 'promise', 'mosaic-dependencies', 'mosaic-pathmapper' ]
 };
