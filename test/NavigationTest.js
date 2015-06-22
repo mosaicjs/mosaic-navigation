@@ -1,18 +1,6 @@
 import expect from 'expect.js';
 import Promise from 'promise';
-import { Navigation } from '../';
-
-class NavHandler {
-    activate(){
-        return Promise.resolve();
-    }
-    update(){
-        return Promise.resolve();
-    }
-    deactivate(){
-        return Promise.resolve();
-    }
-}
+import { Navigation, NavHandler } from '../';
 
 describe('Navigation', function() {
     let activated = [];

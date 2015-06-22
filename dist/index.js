@@ -66,8 +66,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _libNavigation2 = _interopRequireDefault(_libNavigation);
 
+	var _libNavHandler = __webpack_require__(6);
+
+	var _libNavHandler2 = _interopRequireDefault(_libNavHandler);
+
 	exports['default'] = {
-	    Navigation: _libNavigation2['default']
+	    Navigation: _libNavigation2['default'],
+	    NavHandler: _libNavHandler2['default']
 	};
 	module.exports = exports['default'];
 
@@ -612,6 +617,54 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _promise = __webpack_require__(2);
+
+	var _promise2 = _interopRequireDefault(_promise);
+
+	var NavHandler = (function () {
+	    function NavHandler() {
+	        _classCallCheck(this, NavHandler);
+	    }
+
+	    _createClass(NavHandler, [{
+	        key: 'activate',
+	        value: function activate() {
+	            return _promise2['default'].resolve();
+	        }
+	    }, {
+	        key: 'update',
+	        value: function update() {
+	            return _promise2['default'].resolve();
+	        }
+	    }, {
+	        key: 'deactivate',
+	        value: function deactivate() {
+	            return _promise2['default'].resolve();
+	        }
+	    }]);
+
+	    return NavHandler;
+	})();
+
+	exports['default'] = NavHandler;
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ])
