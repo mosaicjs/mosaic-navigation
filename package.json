@@ -1,6 +1,6 @@
 {
   "name": "mosaic-navigation",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Navigation management",
   "main": "index.js",
   "scripts": {
