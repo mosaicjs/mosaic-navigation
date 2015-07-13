@@ -44,6 +44,11 @@ describe('Navigation', function() {
             expect(activated).to.eql(control.activated || []);
             expect(deactivated).to.eql(control.deactivated || []);
             expect(updated).to.eql(control.updated || []);
+            for (let key in state) {
+                let slot = nav.getActive(key);
+                expect(!!slot).to.be(true);
+                expect(slot.path).to.eql(state[key]);
+            }
         });
     }
     it('should update dependencies', function(done){

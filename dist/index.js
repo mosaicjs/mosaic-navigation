@@ -152,6 +152,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        }).bind(_this));
 	                    }
 	                    _this.activeSlot = slot;
+	                    _this.activeSlot.path = path;
 	                })();
 	            }
 	            return promise;
@@ -246,6 +247,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	            nav.register(pathMask, handler);
 	        }
 	    }, {
+	        key: 'getActive',
+
+	        /**
+	         * Returns an active element for the specified type or <code>null</code>
+	         * if there is no active modules of the specified type. The returned value
+	         * contains the following fields: a) path - the current active path of the
+	         * specified type b) obj - active object c) params - parameters for the
+	         * active object
+	         * 
+	         * @return an object with the "path", "obj" and "params" fields
+	         */
+	        value: function getActive(type) {
+	            var nav = this._index[type];
+	            return nav ? nav.activeSlot : null;
+	        }
+	    }, {
 	        key: 'setState',
 
 	        /**
@@ -280,7 +297,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * Sets dependencies for the specified type.
 	         * 
 	         * @param dependencies
-	         *            a map where keys are module types and values are their dependencies 
+	         *            a map where keys are module types and values are their
+	         *            dependencies
 	         */
 	        value: function setDependencies(dependencies) {
 	            this._dependencies.setDependencies(dependencies);
