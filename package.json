@@ -27,7 +27,7 @@
     "webpack": "^1.9.10"
   },
   "dependencies": {
-    "mosaic-dependencies": "^0.1.0",
+    "mosaic-dependencies": "^0.1.1",
     "mosaic-pathmapper": "^0.1.0",
     "promise": "^7.0.3"
   }
