@@ -34,20 +34,31 @@ describe('Navigation', function() {
             return this._push('deactivate', deactivated, params);
         }
     }
+    let currentState = {};
     function test(state, control) {
         return Promise.resolve().then(function(){
             activated = [];
             deactivated = [];
             updated = [];
+            for (let type in state) {
+                currentState[type] = state[type];
+            }
             return nav.setState(state);
         }).then(function(){
             expect(activated).to.eql(control.activated || []);
             expect(deactivated).to.eql(control.deactivated || []);
             expect(updated).to.eql(control.updated || []);
-            for (let key in state) {
-                let slot = nav.getActive(key);
+            for (let type in state) {
+                let slot = nav.getActiveHandler(type);
                 expect(!!slot).to.be(true);
-                expect(slot.path).to.eql(state[key]);
+                expect(slot.path).to.eql(state[type]);
+            }
+            let all = nav.getAllActiveHandlers();
+            expect(!!all).to.be(true);
+            for (let type in all){
+                let slot = all[type];
+                expect(!!slot).to.be(true);
+                expect(slot.path).to.eql(currentState[type]);
             }
         });
     }

@@ -86,15 +86,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
 	var _promise = __webpack_require__(2);
 
@@ -106,96 +106,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _mosaicPathmapper = __webpack_require__(5);
 
-	var Nav = (function () {
-	    function Nav() {
-	        _classCallCheck(this, Nav);
-
-	        this.mapper = new _mosaicPathmapper.PathMapper();
-	        this.activeHandler = null;
-	    }
-
-	    _createClass(Nav, [{
-	        key: 'register',
-	        value: function register(pathMask, handler) {
-	            this.mapper.add(pathMask, handler);
-	        }
-	    }, {
-	        key: 'activate',
-	        value: function activate(path) {
-	            var _this = this;
-
-	            var slot = this.mapper.find(path);
-	            var promise = _promise2['default'].resolve();
-	            if (slot) {
-	                (function () {
-	                    var params = slot.params;
-	                    var handler = slot.obj;
-	                    if (_this.activeSlot) {
-	                        (function () {
-	                            var prevHandler = _this.activeSlot.obj;
-	                            var prevParams = _this.activeSlot.params;
-	                            if (handler === prevHandler) {
-	                                promise = promise.then(function () {
-	                                    return prevHandler.update(params, prevParams);
-	                                });
-	                            } else {
-	                                promise = promise.then(function () {
-	                                    return prevHandler.deactivate(prevParams);
-	                                }).then((function () {
-	                                    return handler.activate(params);
-	                                }).bind(_this));
-	                            }
-	                        })();
-	                    } else {
-	                        promise = promise.then((function () {
-	                            return handler.activate(params);
-	                        }).bind(_this));
-	                    }
-	                    _this.activeSlot = slot;
-	                    _this.activeSlot.path = path;
-	                })();
-	            }
-	            return promise;
-	        }
-	    }, {
-	        key: 'update',
-	        value: function update() {
-	            var _this2 = this;
-
-	            var promise = _promise2['default'].resolve();
-	            if (this.activeSlot) {
-	                (function () {
-	                    var handler = _this2.activeSlot.obj;
-	                    var params = _this2.activeSlot.params;
-	                    promise = promise.then(function () {
-	                        return handler.update(params, params);
-	                    });
-	                })();
-	            }
-	            return promise;
-	        }
-	    }]);
-
-	    return Nav;
-	})();
-
-	// type => navigation module
-	// dependencies between types
-	// re-activate/start
-
-	var typeCounter = 0;
 	/**
-	 * Navigation class activates/deactivates/updates NavigationHandlers when user
-	 * changes paths. Each NavigationHandler is responsible for managing of one
-	 * aspect of application. For example it can manage currently active screen of
-	 * the application, application localization, layout or a UI theme.
+	 * Navigation class activates/deactivates/updates NavHandlers when user changes
+	 * paths. Each NavHandler is responsible for managing of one application aspect.
+	 * For example it can manage currently active application screen, localization,
+	 * layout or a UI theme.
 	 * <p>
 	 * Example:
 	 * </p>
 	 * 
 	 * <pre>
 	 *  let app = ...
-	 *  class LocalizationHandler extends NavigationHandler {
+	 *  class LocalizationHandler extends NavHandler {
 	 *      constructor(app){ this.app = app; }
 	 *      activate(params){ this.update(params); }
 	 *      update(params){
@@ -205,9 +127,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *          this.app.setLanguage(lang);
 	 *      }
 	 *  }
-	 *  class LayoutHandler extends NavigationHandler { ... }
-	 *  class DashboardHandler extends NavigationHandler { ... }
-	 *  class ProjectHandler extends NavigationHandler { ... }
+	 *  class LayoutHandler extends NavHandler { ... }
+	 *  class DashboardHandler extends NavHandler { ... }
+	 *  class ProjectHandler extends NavHandler { ... }
 	 *  app.nav = new Navigation();
 	 *  app.nav.register('lang', '/:lang', new DashboardHandler(app));
 	 *  app.nav.register('screen', '/:projectId/*path', new ProjectHandler(app));
@@ -247,20 +169,44 @@ return /******/ (function(modules) { // webpackBootstrap
 	            nav.register(pathMask, handler);
 	        }
 	    }, {
-	        key: 'getActive',
+	        key: 'getAllActiveHandlers',
+
+	        /**
+	         * Returns a mapping between active module types and the corresponding
+	         * objects with the following fields: "path" - the active path; "handler" -
+	         * the handler itself; "params" - parameters extracted from the path
+	         */
+	        value: function getAllActiveHandlers() {
+	            var result = {};
+	            for (var type in this._index) {
+	                var nav = this.getActiveHandler(type);
+	                if (nav) {
+	                    result[type] = nav;
+	                }
+	            }
+	            return result;
+	        }
+	    }, {
+	        key: 'getActiveHandler',
 
 	        /**
 	         * Returns an active element for the specified type or <code>null</code>
 	         * if there is no active modules of the specified type. The returned value
 	         * contains the following fields: a) path - the current active path of the
-	         * specified type b) obj - active object c) params - parameters for the
-	         * active object
+	         * specified type b) handler - active handler object (a NavHandler instance)
+	         * c) params - parameters for the active object
 	         * 
-	         * @return an object with the "path", "obj" and "params" fields
+	         * @return an object with the "path", "handler" and "params" fields
 	         */
-	        value: function getActive(type) {
+	        value: function getActiveHandler(type) {
 	            var nav = this._index[type];
-	            return nav ? nav.activeSlot : null;
+	            var slot = nav ? nav.activeSlot : null;
+	            if (!slot) return null;
+	            return {
+	                path: slot.path,
+	                handler: slot.obj,
+	                params: slot.params
+	            };
 	        }
 	    }, {
 	        key: 'setState',
@@ -344,6 +290,79 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_events.EventEmitter);
 
 	exports['default'] = Navigation;
+
+	var Nav = (function () {
+	    function Nav() {
+	        _classCallCheck(this, Nav);
+
+	        this.mapper = new _mosaicPathmapper.PathMapper();
+	        this.activeHandler = null;
+	    }
+
+	    _createClass(Nav, [{
+	        key: 'register',
+	        value: function register(pathMask, handler) {
+	            this.mapper.add(pathMask, handler);
+	        }
+	    }, {
+	        key: 'activate',
+	        value: function activate(path) {
+	            var _this = this;
+
+	            var slot = this.mapper.find(path);
+	            var promise = _promise2['default'].resolve();
+	            if (slot) {
+	                (function () {
+	                    var params = slot.params;
+	                    var handler = slot.obj;
+	                    if (_this.activeSlot) {
+	                        (function () {
+	                            var prevHandler = _this.activeSlot.obj;
+	                            var prevParams = _this.activeSlot.params;
+	                            if (handler === prevHandler) {
+	                                promise = promise.then(function () {
+	                                    return prevHandler.update(params, prevParams);
+	                                });
+	                            } else {
+	                                promise = promise.then(function () {
+	                                    return prevHandler.deactivate(prevParams);
+	                                }).then((function () {
+	                                    return handler.activate(params);
+	                                }).bind(_this));
+	                            }
+	                        })();
+	                    } else {
+	                        promise = promise.then((function () {
+	                            return handler.activate(params);
+	                        }).bind(_this));
+	                    }
+	                    _this.activeSlot = slot;
+	                    _this.activeSlot.path = path;
+	                })();
+	            }
+	            return promise;
+	        }
+	    }, {
+	        key: 'update',
+	        value: function update() {
+	            var _this2 = this;
+
+	            var promise = _promise2['default'].resolve();
+	            if (this.activeSlot) {
+	                (function () {
+	                    var handler = _this2.activeSlot.obj;
+	                    var params = _this2.activeSlot.params;
+	                    promise = promise.then(function () {
+	                        return handler.update(params, params);
+	                    });
+	                })();
+	            }
+	            return promise;
+	        }
+	    }]);
+
+	    return Nav;
+	})();
 
 	Object.keys(_events.EventEmitter.prototype).forEach(function (key) {
 	    if (!_events.EventEmitter.prototype.hasOwnProperty(key)) return;
